@@ -1,0 +1,15 @@
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+
+# Python
+__pycache__/
+*.pyc
+venv/
+.env
+
+# Archivos de OS
+.DS_Store
+Thumbs.db
