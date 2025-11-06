@@ -10,16 +10,12 @@
 **Trade-offs considered:**
 
 * **Option A: RDS (PostgreSQL)**
-    * **Pros:** Guarantees referential integrity at the database level (foreign keys), offers powerful and flexible querying with SQL, and has a large community.
+    * **Pros:** Guarantees referential integrity at the database level, offers powerful and flexible querying with SQL, and has a large community.
     * **Cons:** It is not serverless, and we pay for the instance per hour, even when idle.
 
 * **Option B: DynamoDB**
     * **Pros:** Excellent flexibility in its structure (schemaless), it is fully serverless, you pay only for what you use, and it handles JSON data natively.
-    * **Cons:** There is no built-in referential integrity (must be managed by the application), and complex analytical queries (`GROUP BY`, `JOINs`) are very difficult to implement.
-
-**Cost comparison:**
-* **RDS:** **$73.95/month** (for a production `db.t4g.small` Multi-AZ instance).
-* **DynamoDB:** **$15.13/month** (for an equivalent on-demand production workload).
+    * **Cons:** There is no built-in referential integrity (must be managed by the application), and complex analytical queries are very difficult to implement.
 
 **Final justification:**
 We decided to accept the significantly higher monthly cost of RDS compared to DynamoDB because it provides **guaranteed data integrity**. Relying only on application-level validation (as we would with DynamoDB) introduces a risk that a healthcare system cannot afford to take. The database-level integrity provided by foreign keys justifies the higher cost.
