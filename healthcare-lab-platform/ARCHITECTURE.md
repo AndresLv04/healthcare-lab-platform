@@ -2,7 +2,7 @@
 
 
 ## Architecture Decisions
-
+---
 ### Database Choice: [RDS/DynamoDB]
 
 **Decision:** We chose **RDS (PostgreSQL)** because it best supports our business logic through **foreign keys**, which are critical for maintaining data integrity in a health system. It also offers superior query flexibility and we are more familiar with the relational model.
@@ -19,12 +19,16 @@
 
 **Final justification:**
 We decided to accept the significantly higher monthly cost of RDS compared to DynamoDB because it provides **guaranteed data integrity**. Relying only on application-level validation (as we would with DynamoDB) introduces a risk that a healthcare system cannot afford to take. The database-level integrity provided by foreign keys justifies the higher cost.
+
 **Cost comparison**
 
    * RDS (Postgrest)
 ![Estimate the cost RDS](docs/images/cost-rds.png)
    * DynamoDB
 ![Estimate the cost DynamoDB](docs/images/cost-DynamoDB.png)
+
+---
+### Decision 2: Compute Choice for Processing Workers
 
 ---
 
