@@ -5,7 +5,7 @@
 
 
 
-# Estimate the costs
+### Estimate the costs
 
    * RDS (Postgrest)
 ![Estimate the cost RDS](docs/images/precioRDS.png)
