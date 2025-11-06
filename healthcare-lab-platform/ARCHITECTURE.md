@@ -3,21 +3,41 @@
 
 ## Architecture Decisions
 
+### Database Choice: [RDS/DynamoDB]
 
+**Decision:** We chose **RDS (PostgreSQL)** because it best supports our business logic through **foreign keys**, which are critical for maintaining data integrity in a health system. It also offers superior query flexibility and we are more familiar with the relational model.
 
-### Estimate the costs
+**Trade-offs considered:**
+
+* **Option A: RDS (PostgreSQL)**
+    * **Pros:** Guarantees referential integrity at the database level (foreign keys), offers powerful and flexible querying with SQL, and has a large community.
+    * **Cons:** It is not serverless, and we pay for the instance per hour, even when idle.
+
+* **Option B: DynamoDB**
+    * **Pros:** Excellent flexibility in its structure (schemaless), it is fully serverless, you pay only for what you use, and it handles JSON data natively.
+    * **Cons:** There is no built-in referential integrity (must be managed by the application), and complex analytical queries (`GROUP BY`, `JOINs`) are very difficult to implement.
+
+**Cost comparison:**
+* **RDS:** **$73.95/month** (for a production `db.t4g.small` Multi-AZ instance).
+* **DynamoDB:** **$15.13/month** (for an equivalent on-demand production workload).
+
+**Final justification:**
+We decided to accept the significantly higher monthly cost of RDS compared to DynamoDB because it provides **guaranteed data integrity**. Relying only on application-level validation (as we would with DynamoDB) introduces a risk that a healthcare system cannot afford to take. The database-level integrity provided by foreign keys justifies the higher cost.
+**Cost comparison**
 
    * RDS (Postgrest)
-![Estimate the cost RDS](docs/images/precioRDS.png)
-
+![Estimate the cost RDS](docs/images/cost-rds.png)
    * DynamoDB
-![Estimate the cost DynamoDB](docs/images/precioDynamo.png)
+![Estimate the cost DynamoDB](docs/images/cost-DynamoDB.png)
+
+---
+
+### Technology Decisions
 
 **Architecture Diagram**
 ![Diagrama de Arquitectura](docs/images/arquitecturaLaboratorio.png)
 
 ---
-
 ### Data Flow Documentation
 
 **Flow 1: Data Ingestion (Lab → Email)**
