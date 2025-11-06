@@ -4,12 +4,21 @@
 ## Architecture Decisions
 
 
+
+# Estimate the costs
+
+   * RDS (Postgrest)
+![Estimate the cost RDS](docs/images/precioRDS.png)
+
+   * DynamoDB
+![Estimate the cost DynamoDB](docs/images/precioDynamo.png)
+
 **Architecture Diagram**
 ![Diagrama de Arquitectura](docs/images/arquitecturaLaboratorio.png)
 
 ---
 
-### Data Flow Documentation**
+### Data Flow Documentation
 
 **Flow 1: Data Ingestion (Lab → Email)**
 
