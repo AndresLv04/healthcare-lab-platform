@@ -7,9 +7,11 @@
 **Architecture Diagram**
 ![Diagrama de Arquitectura](docs/images/arquitecturaLaboratorio.png)
 
+---
+
 ### Data Flow Documentation**
 
-📥 **Flow 1: Data Ingestion (Lab → Email)**
+**Flow 1: Data Ingestion (Lab → Email)**
 
 1. An external lab sends a patient’s results as a JSON file to our public API.
 2. The request goes through the Internet Gateway and reaches **API Gateway**.
@@ -28,9 +30,7 @@
 7. **SNS** triggers the **Notification Lambda**.
 8. The **Notification Lambda** looks up the patient’s email in **RDS** and uses **SES** to send an email saying results are ready.
 
----
-
-💻 **Flow 2: Patient Portal (Login → Download)**
+**Flow 2: Patient Portal (Login → Download)**
 9) The patient gets the email and opens the portal in the browser.
 10) The request goes through the Internet Gateway to the **ALB** (load balancer).
 11) The **ALB**:
