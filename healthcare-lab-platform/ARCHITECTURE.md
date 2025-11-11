@@ -150,22 +150,25 @@ We chose **User Pools only** for the following reasons:
 
 ## 4. Security Model
 
-   * Network Isolation Strategy
-      * - Public Subnet: Contains only components that need to receive internet traffic.
-      * - Private Subnet: Contain all components that interact with our data.
+   * Network Isolation Strategy:
+      - Public Subnet: Contains only components that need to receive internet traffic.
+      - Private Subnet: Contain all components that interact with our data.
 
    * Data Encryption 
    This applies to all sensitive data, both in-transit and at-rest.
-      * - Data in Transit: All public communication will use HTTPS (TLS 1.2+).
-      * - Data at Rest: Storage locations:
-         * - RDS: AES-256 - The entire database.
-         * - S3 Buckets: SSE-S3 - Original JSON, processed data, and generated PDFs
-         * - SQS: SSE-SQS - Messages in the processing queue.
-         * - EBS Volumes: AES-256 - Disks for the ECS containers.
+      - Data in Transit: All public communication will use HTTPS (TLS 1.2+).
+      - Data at Rest: Storage locations:
+           - RDS: AES-256 - The entire database.
+           - S3 Buckets: SSE-S3 - Original JSON, processed data, and generated PDFs
+           - SQS: SSE-SQS - Messages in the processing queue.
+           - EBS Volumes: AES-256 - Disks for the ECS containers.
 
-   * Credential Management and IAM Roles 
+   * Credential Management and IAM Roles: 
+   
    The principle of least privilege will be followed for every service, meaning it only has permission to do exactly what it needs, nothing more.
 
-   * Logging and Monitoring 
+   * Logging and Monitoring:
+
    All access and actions are logged automatically.
+
 
