@@ -150,11 +150,11 @@ We chose **User Pools only** for the following reasons:
 
 ## 4. Security Model
 
-   * Network Isolation Strategy:
+   #### Network Isolation Strategy:
       - Public Subnet: Contains only components that need to receive internet traffic.
       - Private Subnet: Contain all components that interact with our data.
 
-   * Data Encryption 
+   #### Data Encryption 
    This applies to all sensitive data, both in-transit and at-rest.
       - Data in Transit: All public communication will use HTTPS (TLS 1.2+).
       - Data at Rest: Storage locations:
@@ -163,12 +163,22 @@ We chose **User Pools only** for the following reasons:
            - SQS: SSE-SQS - Messages in the processing queue.
            - EBS Volumes: AES-256 - Disks for the ECS containers.
 
-   * Credential Management and IAM Roles: 
+   #### Credential Management and IAM Roles: 
    
    The principle of least privilege will be followed for every service, meaning it only has permission to do exactly what it needs, nothing more.
 
-   * Logging and Monitoring:
+      * **Lambda Ingest Role:** Read/write access only to ingestion S3 bucket and SQS queue.
+      * **ECS Processor Task Role:** Read from SQS, read/write to S3 processed prefix, read/write to RDS with least privilege.
+      * **Lambda Notify Role:** Read from RDS, send via Amazon SES only.
+      * **ECS Portal Task Role:** Authenticate via Cognito, read patient data from RDS, invoke PDF Lambda.
 
+   #### Security Groups
+      * ALB Security Group allows inbound HTTPS (443) from internet.
+      * ECS tasks Security Group allows inbound from ALB on application ports (80 or 443).
+      * RDS Security Group allows inbound traffic only from ECS task SG on port 5432.
+      * Lambda functions use secure VPC access or private linkage.
+
+   #### Logging and Monitoring: 
    All access and actions are logged automatically.
 
 
